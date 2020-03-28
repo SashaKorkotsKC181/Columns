@@ -15,7 +15,6 @@ namespace CourseWork
         Figure currentFigure;
         Cobe cobe;
         Point center;
-        int k = 0;
         const int cobeSide = 30;
         const int numberOfCobsDownInPictureBox = 4;
         const int numberOfCobsDownSide = 6;
@@ -29,16 +28,29 @@ namespace CourseWork
             leftUpPointOfWorkspace = new Point(center.X - numberOfCobsDownSide / 2 * cobeSide, center.Y - numberOfCobsLeftSide / 2 * cobeSide);
             map = new int[numberOfCobsLeftSide, numberOfCobsDownSide];
             cobe = new Cobe(cobeSide, leftUpPointOfWorkspace);
-            currentFigure = new StandardFigure(0, 2);
+            currentFigure = new StandardFigure(map);
             timer.Tick += new EventHandler(update);
+            KeyUp += new KeyEventHandler(ControlOfCurrentFigure);
         }
+
+        private void update(object sender, EventArgs e)
+        {
+            Refresh();
+            if (!currentFigure.CheckMoveDown())
+                currentFigure = new StandardFigure(map);
+            else
+            {
+                CleanMap();
+                currentFigure.MoveDown();
+            }
+        }
+
         public void  Map()
         {
-
             for (int i = 0; i < currentFigure.GetMatrix.GetLength(0); i++)
             {
                 for (int j = 0; j < currentFigure.GetMatrix.GetLength(1); j++)
-                {
+                {                    
                     map[currentFigure.GetY + i, currentFigure.GetX + j] = currentFigure.GetMatrix[i, j];
                 }
 
@@ -65,10 +77,35 @@ namespace CourseWork
                 }
             }
         }
-        
-        private void Form1_Resize(object sender, EventArgs e)
+        private void ControlOfCurrentFigure(object sender, KeyEventArgs e)
         {
-            Refresh();             
+            switch(e.KeyCode)
+            {
+                case Keys.Left:
+                    if (currentFigure.CheckMoveLeft(map))
+                    {
+                        CleanMap();
+                        currentFigure.MoveLeft();
+                        Refresh();
+                    }
+                    break;
+                case Keys.Right:
+                    if (currentFigure.CheckMoveRight(map))
+                    {
+                        CleanMap();
+                        currentFigure.MoveRight();
+                        Refresh();
+                    }
+                    break;
+
+            }
+        }
+
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            Map();
+            DrawGrid(e.Graphics);
+            DrawMap(e.Graphics);
         }
 
         private void DrawGrid(Graphics graf)
@@ -79,35 +116,34 @@ namespace CourseWork
             }
             for (int i = 0; i <= map.GetLength(0); i++)
             {
-                graf.DrawLine(new Pen(Color.LightGray), new Point(leftUpPointOfWorkspace.X, leftUpPointOfWorkspace.Y + i * cobeSide), new Point(leftUpPointOfWorkspace.X + numberOfCobsDownSide * cobeSide, leftUpPointOfWorkspace.Y + i * cobeSide)); 
+                graf.DrawLine(new Pen(Color.LightGray), new Point(leftUpPointOfWorkspace.X, leftUpPointOfWorkspace.Y + i * cobeSide), new Point(leftUpPointOfWorkspace.X + numberOfCobsDownSide * cobeSide, leftUpPointOfWorkspace.Y + i * cobeSide));
             }
 
         }
-        private void DrawPictureBoxs(Graphics graf)
+        private void DrawPictureBoxs()
         {
+            leftPictureBox.Location = new Point(center.X - (numberOfCobsDownSide / 2 + numberOfCobsDownInPictureBox) * cobeSide, center.Y - numberOfCobsLeftSide / 2 * cobeSide);
             //leftPictureBox.Size = new System.Drawing.Size(numberOfCobsDownSide / 2 * cobeSide, numberOfCobsLeftSide * cobeSide + downPictureBox.Height);
             rightPictureBox.Location = new Point(center.X + numberOfCobsDownSide / 2 * cobeSide, center.Y - numberOfCobsLeftSide / 2 * cobeSide);
             //leftPictureBox.Size = rightPictureBox.Size;
             downPictureBox.Location = new Point(center.X - numberOfCobsDownSide / 2 * cobeSide, center.Y + numberOfCobsLeftSide / 2 * cobeSide);
         }
-
-        private void Form1_Paint(object sender, PaintEventArgs e)
+        private void Form1_Resize(object sender, EventArgs e)
         {
             center = new Point(this.DisplayRectangle.Width / 2, MenuOfForm1.Height + (this.DisplayRectangle.Height - MenuOfForm1.Height - downPictureBox.Height) / 2);
             leftUpPointOfWorkspace = new Point(center.X - numberOfCobsDownSide / 2 * cobeSide, center.Y - numberOfCobsLeftSide / 2 * cobeSide);
-            cobe.SetLeftUpPointOfWorkspace = leftUpPointOfWorkspace;
-            leftPictureBox.Location = new Point(center.X - (numberOfCobsDownSide / 2 + numberOfCobsDownInPictureBox) * cobeSide, center.Y - numberOfCobsLeftSide / 2 * cobeSide);
-            DrawPictureBoxs(e.Graphics);
-            DrawGrid(e.Graphics);
-            DrawMap(e.Graphics);
+            cobe.SetLeftUpPointOfWorkspace = leftUpPointOfWorkspace;            
+            DrawPictureBoxs();
+            Refresh();
         }
 
-        private void update(object sender, EventArgs e)
+        private void restartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //CleanMap();
-            //currentFigure.MoveDown();
-            Map();
-            Invalidate();
+            timer.Enabled = !timer.Enabled;
+            if (timer.Enabled)
+                pauseToolStripMenuItem.Text = "&Pause";
+            else
+                pauseToolStripMenuItem.Text = "&Start";
         }
 
     }

@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.MenuOfForm1 = new System.Windows.Forms.MenuStrip();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +61,7 @@
             // gameToolStripMenuItem
             // 
             this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.restartToolStripMenuItem,
+            this.pauseToolStripMenuItem,
             this.toolStripMenuItem2,
             this.saveToolStripMenuItem,
             this.loadToolStripMenuItem,
@@ -70,11 +70,12 @@
             this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.gameToolStripMenuItem.Text = "&Game";
             // 
-            // restartToolStripMenuItem
+            // pauseToolStripMenuItem
             // 
-            this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
-            this.restartToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.restartToolStripMenuItem.Text = "&Restart";
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.pauseToolStripMenuItem.Text = "&Pause";
+            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.restartToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -168,7 +169,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
@@ -177,8 +178,8 @@
         private System.Windows.Forms.PictureBox leftPictureBox;
         private System.Windows.Forms.PictureBox rightPictureBox;
         private System.Windows.Forms.PictureBox downPictureBox;
-        private System.Windows.Forms.Timer timer;
         public System.Windows.Forms.MenuStrip MenuOfForm1;
+        private System.Windows.Forms.Timer timer;
     }
 }
 

@@ -10,7 +10,7 @@ namespace CourseWork
 {
     class Cobe
     {
-        Bitmap[] cobeColors = { Resource.Blue, Resource.Green, Resource.Pink, Resource.Purple, Resource.Red, Resource.Yellow };
+        Bitmap[] cobeColors = { Resource.Blue, Resource.Blue, Resource.Green, Resource.Pink, Resource.Purple, Resource.Red, Resource.Yellow };
         int side = 0;
         Point leftUpPointOfWorkspace;
         public Cobe(int side_, Point leftUpPointOfWorkspace_)
@@ -20,7 +20,7 @@ namespace CourseWork
         }
         public void Draw(ref Graphics graf, int i, int j, int color_)
         {
-            graf.DrawImage(cobeColors[color_], leftUpPointOfWorkspace.X + j * side, leftUpPointOfWorkspace.Y + i * side, side, side);
+            graf.DrawImage(cobeColors[color_], (leftUpPointOfWorkspace.X + j * side), (leftUpPointOfWorkspace.Y + i * side), side, side);
         }
         public void HideDrawingBackGround(ref Graphics graf, int i , int j, Color colorOfBackGound)
         {

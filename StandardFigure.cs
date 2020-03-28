@@ -10,29 +10,18 @@ namespace CourseWork
 {
     class StandardFigure : Figure 
     {
-        public StandardFigure(int y_, int x_)
+        public StandardFigure(int[,] map_)
         {
             Random rand = new Random();
-            x = x_;
-            y = y_;
+            x = rand.Next(0, map_.GetLength(1) - 1);
+            y = 0;
+            map = map_;
             matrix = new int[3, 1]
             {
-                {rand.Next(1, 5)},
-                {rand.Next(1, 5)},
-                {rand.Next(1, 5)},
+                {rand.Next(1, 6)},
+                {rand.Next(1, 6)},
+                {rand.Next(1, 6)},
             };
-        }
-
+        }        
     }
 }
-
-
-
-
-
-
-
-/*leftUpPointOfFigure = new Point(leftUpPointOfWorkspace.X + rand.Next() * side_, leftUpPointOfWorkspace.Y);
-cobes[0] = new Cobe(new Point(leftUpPointOfFigure.X, leftUpPointOfFigure.Y), side_);
-cobes[1] = new Cobe(new Point(leftUpPointOfFigure.X, leftUpPointOfFigure.Y + side_), side_);
-cobes[2] = new Cobe(new Point(leftUpPointOfFigure.X, leftUpPointOfFigure.Y + side_ * 2), side_);*/
